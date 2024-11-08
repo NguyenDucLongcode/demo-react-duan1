@@ -2,16 +2,19 @@ import React from "react";
 import UserInFo from "./UserInFo";
 import MyInfor from "./MyInfor";
 class MyComponent extends React.Component {
+  state = {
+    listUsers: [
+      { id: 1, name: "Dragon", age: 26 },
+      { id: 2, name: "Long", age: 24 },
+      { id: 3, name: "KingDragon", age: 30 },
+    ],
+  };
   //jsx
   render() {
-    // const myAge = 26;
-    const myJob = ["Dog", "Student", "Teacher", "Doctor"];
     return (
       <div>
         <UserInFo />
-        <MyInfor name="Dragon" age={26} myJob={myJob} />
-        <hr></hr>
-        <MyInfor name="Long" age="29" />
+        <MyInfor listUsers={this.state.listUsers} />
       </div>
     );
   }
