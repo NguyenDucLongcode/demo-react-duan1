@@ -1,6 +1,7 @@
 import React from "react";
 import AddUser from "./AddUser";
 import MyInfor from "./MyInfor";
+import "./DisplayInfor.scss";
 class MyComponent extends React.Component {
   state = {
     listUsers: [
@@ -14,7 +15,7 @@ class MyComponent extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div className="display-infor-container">
         <AddUser addListUser={this.addListUser} />
         <MyInfor listUsers={this.state.listUsers} />
       </div>

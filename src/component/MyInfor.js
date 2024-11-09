@@ -27,6 +27,7 @@ class MyInfor extends React.Component {
                 <div key={user.id} className={user.age < 18 ? "red" : "green"}>
                   <div>My name's {user.name}</div>
                   <div>My age is {user.age}</div>
+                  <hr></hr>
                 </div>
               );
             })}
