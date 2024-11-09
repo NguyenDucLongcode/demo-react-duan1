@@ -1,5 +1,5 @@
 import React from "react";
-class UserInFo extends React.Component {
+class AddUser extends React.Component {
   state = {
     name: "Long",
     age: 2000,
@@ -13,7 +13,11 @@ class UserInFo extends React.Component {
   handlerOnSubmit = (event) => {
     event.preventDefault();
     document.querySelector("form").reset();
-    console.log(this.state);
+    this.props.addListUser({
+      id: Math.floor(Math.random() * 100 + 1) + "radom",
+      name: this.state.name,
+      age: this.state.age,
+    });
   };
   render() {
     return (
@@ -46,4 +50,4 @@ class UserInFo extends React.Component {
     );
   }
 }
-export default UserInFo;
+export default AddUser;
