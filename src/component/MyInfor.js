@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // class MyInfor extends React.Component {
 //   state = {
 //     showListUsers: true,
@@ -51,6 +51,11 @@ const MyInfor = (props) => {
   const handleShowHideListUsers = () => {
     setisListUser(!isListUser);
   };
+  useEffect(() => {
+    if (listUsers.length === 0) {
+      alert("List users is empty");
+    }
+  }, [listUsers]);
   return (
     <div>
       <div>
