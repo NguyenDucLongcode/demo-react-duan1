@@ -1,45 +1,39 @@
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 const Header = () => {
   //   const handleSelect = (eventKey) => alert(`selected ${eventKey}`);
   // onSelect={handleSelect}
 
   return (
-    <Nav className="justify-content-evenly bg-light  py-2">
+    <Nav className="justify-content-evenly  bg-light  py-2 ">
       <Nav>
         <Nav.Item>
-          <Link to="/home" className="nav-link">
+          <Link to="/" className="nav-link fs-5 text-dark">
             King Dragon
           </Link>
         </Nav.Item>
         <Nav.Item>
-          <Link to="/home" className="nav-link">
+          <NavLink to="/" className="nav-link">
             Home
-          </Link>
+          </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <Link to="/users" className="nav-link">
+          <NavLink to="/users" className="nav-link">
             Users
-          </Link>
+          </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <Link to="/admins" className="nav-link">
+          <NavLink to="/admins" className="nav-link">
             Admins
-          </Link>
+          </NavLink>
         </Nav.Item>
       </Nav>
       <NavDropdown title="Setting" id="nav-dropdown">
-        <NavDropdown.Item eventKey="4.1" href="#login">
-          Log in
-        </NavDropdown.Item>
-        <NavDropdown.Item eventKey="4.2" href="#logout">
-          Log out
-        </NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item eventKey="4.4" href="#profile">
-          Profile
-        </NavDropdown.Item>
+        <NavDropdown.Item href="#login">Log in</NavDropdown.Item>
+        <NavDropdown.Item href="#logout">Log out</NavDropdown.Item>
+
+        <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
       </NavDropdown>
     </Nav>
   );
