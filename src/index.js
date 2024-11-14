@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Users from "./component/User/User";
 import Admin from "./component/Admin/Admin";
 import HomePage from "./component/HomePage/HomePage";
+import DashBoard from "./component/Admin/DashBoard";
+import ManagerUser from "./component/Admin/ManageUser";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,10 +18,15 @@ root.render(
     {/* <React.StrictMode> */}
     <BrowserRouter>
       <Routes>
+        {/* add */}
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
           <Route path="users" element={<Users />} />
-          <Route path="/admins" element={<Admin />} />
+        </Route>
+        {/* admin */}
+        <Route path="/admins" element={<Admin />}>
+          <Route index element={<DashBoard />} />
+          <Route path="manager-users" element={<ManagerUser />} />
         </Route>
       </Routes>
     </BrowserRouter>

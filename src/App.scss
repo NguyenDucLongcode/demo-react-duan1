@@ -7,19 +7,82 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+// header
 .app-container {
   .header-container {
+    background-color: rgba(255, 255, 255, 0.3);
     .nav .nav-link,
     .nav .nav-item,
     .nav .nav-dropdown-item {
       color: gray;
     }
-  }
-}
-.app-container {
-  .header-container {
     .nav .nav-link.active {
       color: aqua;
+    }
+    .header-btn {
+      .btn {
+        width: 80px;
+        height: 40px;
+        border: 1px solid black;
+        border-radius: 10px;
+        margin-left: 10px;
+      }
+      .btn.signup {
+        color: white;
+        background: gray;
+        &:hover {
+          background: black;
+        }
+      }
+    }
+  }
+}
+// HomePage
+.homePage-container {
+  display: flex;
+  height: 666px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("./acsets/background-homepage.jpg");
+  background-position: right;
+  background-size: 2000px;
+  .homPage-content {
+    width: 50%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    gap: 30px;
+    padding-left: 250px;
+    div:nth-of-type(1) {
+      font-size: 50px;
+      width: 500px;
+      font-weight: bolder;
+    }
+    div:nth-of-type(2) {
+      width: 500px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    button {
+      width: 200px;
+      height: 50px;
+      border-radius: 20px;
+      color: white;
+      background-color: gray;
+      &:hover {
+        background-color: black;
+      }
+    }
+  }
+  .homePage-video {
+    width: 50%;
+    height: 100%;
+    video {
+      width: 80%;
+      height: 100%;
+      bottom: 25%;
+      right: 10%;
     }
   }
 }

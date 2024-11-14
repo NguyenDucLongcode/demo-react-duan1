@@ -6,8 +6,8 @@ const Header = () => {
   // onSelect={handleSelect}
 
   return (
-    <Nav className="justify-content-evenly  bg-light  py-2 ">
-      <Nav>
+    <Nav className="header-container justify-content-between py-2 px-5">
+      <Nav className="header-content">
         <Nav.Item>
           <Link to="/" className="nav-link fs-5 text-dark">
             King Dragon
@@ -29,12 +29,16 @@ const Header = () => {
           </NavLink>
         </Nav.Item>
       </Nav>
-      <NavDropdown title="Setting" id="nav-dropdown">
-        <NavDropdown.Item href="#login">Log in</NavDropdown.Item>
-        <NavDropdown.Item href="#logout">Log out</NavDropdown.Item>
+      <Nav className="header-btn">
+        <button className="btn login">Loin</button>
+        <button className="btn signup">Signup</button>
+        <NavDropdown title="Setting" id="nav-dropdown">
+          <NavDropdown.Item href="#login">Log in</NavDropdown.Item>
+          <NavDropdown.Item href="#logout">Log out</NavDropdown.Item>
 
-        <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
-      </NavDropdown>
+          <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
+        </NavDropdown>
+      </Nav>
     </Nav>
   );
 };
