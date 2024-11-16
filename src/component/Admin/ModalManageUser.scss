@@ -1,0 +1,33 @@
+.modal-create-user {
+  .Modal-preview-img {
+    border: 1px dashed #ccc;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+    font-size: 20px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}
+.ManagerUser-container {
+  padding: 10px;
+  .MangerUser-title {
+    font-weight: 600;
+    font-size: 26px;
+  }
+  .MangerUser-content {
+    .MangerUser-btn {
+      margin: 10px 0;
+      button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 10px;
+      }
+    }
+  }
+}
