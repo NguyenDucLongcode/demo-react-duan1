@@ -1,10 +1,16 @@
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 const Header = () => {
   //   const handleSelect = (eventKey) => alert(`selected ${eventKey}`);
   // onSelect={handleSelect}
-
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate("/login");
+  };
+  const handleRegister = () => {
+    navigate("/register");
+  };
   return (
     <Nav className="header-container justify-content-between py-2 px-5">
       <Nav className="header-content">
@@ -30,12 +36,25 @@ const Header = () => {
         </Nav.Item>
       </Nav>
       <Nav className="header-btn">
-        <button className="btn login">Loin</button>
-        <button className="btn signup">Signup</button>
+        <button
+          className="btn login"
+          onClick={() => {
+            handleLogin();
+          }}
+        >
+          Loin
+        </button>
+        <button
+          className="btn signup"
+          onClick={() => {
+            handleRegister();
+          }}
+        >
+          Signup
+        </button>
         <NavDropdown title="Setting" id="nav-dropdown">
-          <NavDropdown.Item href="#login">Log in</NavDropdown.Item>
+          <NavDropdown.Item>Log in</NavDropdown.Item>
           <NavDropdown.Item href="#logout">Log out</NavDropdown.Item>
-
           <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
         </NavDropdown>
       </Nav>

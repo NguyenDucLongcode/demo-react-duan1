@@ -1,22 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { toast } from "react-toastify";
-import { potCreateUser } from "../../services/aipServices";
-const ModalCreateUser = (props) => {
-  const { show, setShow, currentPage, setCurrentPage } = props;
+import _ from "lodash";
+import { putListUsers } from "../../services/aipServices";
+const ModalViewUser = (props) => {
+  const { show, setShow, dataViewUser, setDataViewUser } = props;
+  useEffect(() => {
+    if (!_.isEmpty(dataViewUser)) {
+      //update state
+      setId(dataViewUser.id);
+      setEmail(dataViewUser.email);
+      setUsername(dataViewUser.username);
+      setRole(dataViewUser.role);
+      if (dataViewUser.image !== "") {
+        setPreviewImage(`data:image/jpeg;base64,${dataViewUser.image}`);
+      }
+    }
+  }, [dataViewUser]);
   const handleClose = () => {
     setShow(false);
-    setEmail("");
-    setPassword("");
-    setUsername("");
-    setRole("USER");
-    setImage("");
+    setDataViewUser({});
+    setPreviewImage("");
   };
-  const handleShow = () => setShow(true);
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -31,25 +41,6 @@ const ModalCreateUser = (props) => {
       setImage(event.target.files[0]);
     }
   };
-  const handleSubmit = async () => {
-    if (!password) {
-      toast.error("Password is required");
-      return;
-    }
-    //gọi api đưa data lên backend
-
-    let data = await potCreateUser(email, password, username, role, image);
-    if (data && data.EC === 0) {
-      toast.success(data.EM);
-      handleClose();
-      // await props.fetchListUser();
-      await props.fetchListUserWithPaginate(1);
-      setCurrentPage(1);
-    }
-    if (data && data.EC !== 0) {
-      toast.error(data.EM);
-    }
-  };
   return (
     <>
       <Modal
@@ -60,7 +51,7 @@ const ModalCreateUser = (props) => {
         backdrop="static"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add User</Modal.Title>
+          <Modal.Title>View User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -73,6 +64,7 @@ const ModalCreateUser = (props) => {
                   }}
                   type="email"
                   placeholder="Enter email"
+                  disabled
                   value={email}
                 />
               </Form.Group>
@@ -85,6 +77,7 @@ const ModalCreateUser = (props) => {
                   }}
                   type="password"
                   placeholder="Password"
+                  disabled
                   value={password}
                 />
               </Form.Group>
@@ -97,6 +90,7 @@ const ModalCreateUser = (props) => {
                   onChange={(event) => {
                     setUsername(event.target.value);
                   }}
+                  disabled
                   value={username}
                 />
               </Form.Group>
@@ -107,6 +101,7 @@ const ModalCreateUser = (props) => {
                   onChange={(event) => {
                     setRole(event.target.value);
                   }}
+                  disabled
                   value={role}
                 >
                   <option value={"USER"}>USER</option>
@@ -123,6 +118,7 @@ const ModalCreateUser = (props) => {
                   type="file"
                   required
                   name="file"
+                  disabled
                 />
                 <Form.Control.Feedback
                   type="invalid"
@@ -143,12 +139,9 @@ const ModalCreateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmit()}>
-            Save
-          </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
-export default ModalCreateUser;
+export default ModalViewUser;

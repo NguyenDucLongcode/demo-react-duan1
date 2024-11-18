@@ -6,12 +6,20 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import { putListUsers } from "../../services/aipServices";
 const ModalUpdateUser = (props) => {
-  const { show, setShow, dataUpdateUser } = props;
+  const {
+    show,
+    setShow,
+    dataUpdateUser,
+    setDataUpdateUser,
+    currentPage,
+    setCurrentPage,
+  } = props;
   useEffect(() => {
-    console.log(dataUpdateUser);
     if (!_.isEmpty(dataUpdateUser)) {
       //update state
+      setId(dataUpdateUser.id);
       setEmail(dataUpdateUser.email);
       setUsername(dataUpdateUser.username);
       setRole(dataUpdateUser.role);
@@ -22,12 +30,10 @@ const ModalUpdateUser = (props) => {
   }, [dataUpdateUser]);
   const handleClose = () => {
     setShow(false);
-    setEmail("");
-    setPassword("");
-    setUsername("");
-    setRole("USER");
-    setImage("");
+    setDataUpdateUser({});
+    setPreviewImage("");
   };
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -42,6 +48,18 @@ const ModalUpdateUser = (props) => {
       setImage(event.target.files[0]);
     }
   };
+  const handleSummit = async () => {
+    let data = await putListUsers(id, username, role, image);
+    if (data && data.EC === 0) {
+      toast.success(data.EM);
+      handleClose();
+      // await props.fetchListUser();
+      await props.fetchListUserWithPaginate(currentPage);
+    }
+    if (data && data.EC !== 0) {
+      toast.error(data.EM);
+    }
+  };
   return (
     <>
       <Modal
@@ -52,7 +70,7 @@ const ModalUpdateUser = (props) => {
         backdrop="static"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add User</Modal.Title>
+          <Modal.Title>Update User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -137,7 +155,7 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleClose()}>
+          <Button variant="primary" onClick={() => handleSummit()}>
             Save
           </Button>
         </Modal.Footer>

@@ -11,6 +11,8 @@ import Admin from "./component/Admin/Admin";
 import HomePage from "./component/HomePage/HomePage";
 import DashBoard from "./component/Admin/DashBoard";
 import ManagerUser from "./component/Admin/ManageUser";
+import Login from "./component/Auth/Login";
+import Register from "./component/Auth/Register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,6 +30,8 @@ root.render(
           <Route index element={<DashBoard />} />
           <Route path="manager-users" element={<ManagerUser />} />
         </Route>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Routes>
     </BrowserRouter>
     {/* </React.StrictMode> */}

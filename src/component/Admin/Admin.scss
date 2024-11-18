@@ -35,10 +35,13 @@
   .admin-content {
     width: 100%;
     .admin-header {
-      border: 1px solid red;
+      border: 1px groove;
       height: 40px;
     }
     .admin-main {
+      .table-user {
+        height: 480px;
+      }
     }
   }
 }
