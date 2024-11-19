@@ -1,9 +1,10 @@
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Header = () => {
-  //   const handleSelect = (eventKey) => alert(`selected ${eventKey}`);
-  // onSelect={handleSelect}
+  const account = useSelector((state) => state.user.account);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const navigate = useNavigate();
   const handleLogin = () => {
     navigate("/login");
@@ -36,27 +37,31 @@ const Header = () => {
         </Nav.Item>
       </Nav>
       <Nav className="header-btn">
-        <button
-          className="btn login"
-          onClick={() => {
-            handleLogin();
-          }}
-        >
-          Loin
-        </button>
-        <button
-          className="btn signup"
-          onClick={() => {
-            handleRegister();
-          }}
-        >
-          Signup
-        </button>
-        <NavDropdown title="Setting" id="nav-dropdown">
-          <NavDropdown.Item>Log in</NavDropdown.Item>
-          <NavDropdown.Item href="#logout">Log out</NavDropdown.Item>
-          <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
-        </NavDropdown>
+        {!isAuthenticated ? (
+          <>
+            <button
+              className="btn login"
+              onClick={() => {
+                handleLogin();
+              }}
+            >
+              Loin
+            </button>
+            <button
+              className="btn signup"
+              onClick={() => {
+                handleRegister();
+              }}
+            >
+              Signup
+            </button>
+          </>
+        ) : (
+          <NavDropdown title="Setting" id="nav-dropdown">
+            <NavDropdown.Item href="#logout">Log out</NavDropdown.Item>
+            <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
+          </NavDropdown>
+        )}
       </Nav>
     </Nav>
   );

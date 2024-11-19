@@ -6,16 +6,18 @@ import { toast } from "react-toastify";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineVisibilityOff, MdVisibility } from "react-icons/md";
-
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = async () => {
     let data = await postLogin(email, password);
-    console.log(data);
     if (data && data.EC === 0) {
+      dispatch(doLogin(data));
       toast.success(data.EM);
       navigate("/");
     }
