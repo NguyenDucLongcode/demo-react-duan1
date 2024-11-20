@@ -8,13 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineVisibilityOff, MdVisibility } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
+import { ImSpinner9 } from "react-icons/im";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmit = async () => {
+    setIsLoading(true);
     let data = await postLogin(email, password);
     if (data && data.EC === 0) {
       dispatch(doLogin(data));
@@ -24,6 +27,7 @@ const Login = () => {
     if (data && data.EC !== 0) {
       toast.error(data.EM);
     }
+    setIsLoading(false);
   };
   let inputPassword = document.querySelector("#password");
   const handleShowHidePassword = () => {
@@ -69,11 +73,13 @@ const Login = () => {
         <span>Forgot password?</span>
         <div>
           <button
-            className="btn btn-primary col-4"
+            className="btn btn-primary "
             onClick={() => {
               handleSubmit();
             }}
+            disabled={isLoading}
           >
+            <ImSpinner9 className="icon-loading" />
             Login
           </button>
         </div>

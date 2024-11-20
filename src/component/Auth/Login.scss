@@ -61,12 +61,15 @@
 
   .btn-primary {
     display: block;
-    width: 100%;
-    max-width: 400px;
+    width: 280px;
     background: linear-gradient(to right, #1d8cf8, #735ffa);
     color: white;
     font-weight: bold;
     transition: background 0.3s;
+    &:disabled {
+      background: gray;
+      // cursor: not-allowed !important;
+    }
   }
 
   .btn-primary:hover {
@@ -92,6 +95,18 @@
     z-index: 1;
     margin-top: -47px;
     margin-left: 250px;
+  }
+  .icon-loading {
+    margin-right: 5px;
+    animation: animate_loading 1s linear infinite;
+  }
+  @keyframes animate_loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
 // register
@@ -161,21 +176,19 @@
 
   .btn-primary {
     display: block;
-    width: 100%;
-    max-width: 400px;
     background: linear-gradient(to right, #1d8cf8, #735ffa);
     color: white;
     font-weight: bold;
     transition: background 0.3s;
+    width: 280px !important;
+    &:disabled {
+      background: gray;
+      // cursor: not-allowed !important;
+    }
   }
 
   .btn-primary:hover {
     background: linear-gradient(to right, #1166cc, #5b48d6);
-  }
-
-  .col-4 {
-    width: 100%;
-    max-width: 400px;
   }
 
   span {
@@ -193,5 +206,17 @@
     margin-top: -47px;
     margin-left: 250px;
     text-align: center;
+  }
+  .icon-loading {
+    margin-right: 5px;
+    animation: animate_loading 1s linear infinite;
+  }
+  @keyframes animate_loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }

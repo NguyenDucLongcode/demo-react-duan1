@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineVisibilityOff, MdVisibility } from "react-icons/md";
+import { ImSpinner9 } from "react-icons/im";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -87,6 +88,7 @@ const Register = () => {
               handleSubmit();
             }}
           >
+            <ImSpinner9 className="icon-loading" />
             Register
           </button>
         </div>
