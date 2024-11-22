@@ -15,8 +15,16 @@ import Login from "./component/Auth/Login";
 import Register from "./component/Auth/Register";
 import { PersistGate } from "redux-persist/integration/react";
 import ListQuiz from "./component/User/ListQuiz";
+import Details from "./component/User/Details";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const NotFound = () => {
+  return (
+    <div className="container alert alert-warning">
+      404.Not found data with your current URL
+    </div>
+  );
+};
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
@@ -28,6 +36,7 @@ root.render(
             <Route index element={<HomePage />} />
             <Route path="users" element={<ListQuiz />} />
           </Route>
+          <Route path="/quiz/:id" element={<Details />} />
           {/* admin */}
           <Route path="/admins" element={<Admin />}>
             <Route index element={<DashBoard />} />
@@ -35,6 +44,7 @@ root.render(
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
       {/* </React.StrictMode> */}
