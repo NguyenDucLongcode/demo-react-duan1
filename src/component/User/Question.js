@@ -1,9 +1,7 @@
 const Question = (props) => {
   const { data } = props;
-  console.log(data);
   const dataQuestions = data.answers;
   const handleChange = (event, answerId, questionId) => {
-    console.log("answerId", answerId, "question ", questionId);
     props.dataCheckBox(answerId, questionId);
   };
   return (

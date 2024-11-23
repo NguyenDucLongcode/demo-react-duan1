@@ -1,16 +1,10 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import {
-  FaTachometerAlt,
-  FaGem,
-  FaList,
-  FaGithub,
-  FaRegLaughWink,
-  FaHeart,
-} from "react-icons/fa";
+import { FaTachometerAlt, FaGithub, FaRegLaughWink } from "react-icons/fa";
 import sidebarBg from "../../acsets/bg-sidebar.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const navigate = useNavigate();
   return (
     <>
       <Sidebar
@@ -36,7 +30,7 @@ const SideBar = (props) => {
             }}
           >
             {/* {collapsed? : } */}
-            <span> King Dragon</span>
+            <span onClick={() => navigate("/")}> King Dragon</span>
           </div>
           <hr />
         </Sidebar>
@@ -58,7 +52,10 @@ const SideBar = (props) => {
               <MenuItem component={<Link to="manager-users" />}>
                 Quản Lý User
               </MenuItem>
-              <MenuItem> Quản Lý Bào Quiz</MenuItem>
+              <MenuItem component={<Link to="manager-quiz" />}>
+                {" "}
+                Quản Lý Bài Quiz
+              </MenuItem>
               <MenuItem> Quản Lý Câu Hỏi</MenuItem>
             </SubMenu>
           </Menu>

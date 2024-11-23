@@ -1,10 +1,11 @@
 import { useParams, useLocation } from "react-router-dom";
-import { getQuestionsById } from "../../services/aipServices";
+import { getQuestionsById, postSummitAnswer } from "../../services/aipServices";
 import { useEffect } from "react";
 import _ from "lodash";
 import "./Details.scss";
 import Question from "./Question";
 import { useState } from "react";
+import ShowModalAnswer from "./ShowModalAnswer";
 const Details = (props) => {
   const params = useParams();
   const quizId = params.id;
@@ -12,9 +13,12 @@ const Details = (props) => {
   let { title } = location.state;
   const [dataQuestions, setDataQuestions] = useState([]);
   const [index, setIndex] = useState(0);
+  const [showModalResults, setShowModalResults] = useState(false);
+  const [dataModeResults, setDataModeResults] = useState({});
   useEffect(() => {
     fetchQuestions();
   }, [quizId]);
+  //
   const dataCheckBox = (answerId, questionId) => {
     let dataQuestionsColone = _.cloneDeep(dataQuestions);
     let question = dataQuestionsColone.find(
@@ -36,7 +40,7 @@ const Details = (props) => {
       setDataQuestions(dataQuestionsColone);
     }
   };
-
+  // set data when receive from server
   const fetchQuestions = async () => {
     const res = await getQuestionsById(quizId);
 
@@ -60,20 +64,58 @@ const Details = (props) => {
           return { quizId: key, answers, description, image };
         })
         .value();
-      console.log("check raw", data);
       setDataQuestions(data);
     }
   };
+
   const NextIndex = () => {
     if (index < dataQuestions.length - 1) {
       setIndex(index + 1);
     }
   };
+
   const prevIndex = () => {
     if (index > 0) {
       setIndex(index - 1);
     }
   };
+  // set data sent to sever
+  const handleFinish = async () => {
+    let payload = {
+      quizId: +quizId,
+      answers: [],
+    };
+    let answers = [];
+    if (dataQuestions && dataQuestions.length > 0) {
+      dataQuestions.forEach((item) => {
+        let questionId = +item.quizId;
+        let userAnswerId = [];
+        item.answers.forEach((answer) => {
+          if (answer.isSelected) {
+            userAnswerId.push(+answer.id);
+          }
+        });
+        answers.push({
+          questionId: questionId,
+          userAnswerId: userAnswerId,
+        });
+      });
+      payload.answers = answers;
+      let res = await postSummitAnswer(payload);
+      console.log(res);
+      if (res && res.EC === 0) {
+        setDataModeResults({
+          countCorrect: res.DT.countCorrect,
+          countTotal: res.DT.countTotal,
+          quizData: res.DT.quizData,
+        });
+        setShowModalResults(true);
+      } else {
+        alert("An error occurred");
+      }
+    }
+  };
+
   return (
     <div className="question-container">
       <div className="question-left">
@@ -103,12 +145,17 @@ const Details = (props) => {
           >
             Next
           </button>
-          <button className="btn btn-warning" onClick={() => prevIndex()}>
+          <button className="btn btn-warning" onClick={() => handleFinish()}>
             Finish
           </button>
         </div>
       </div>
       <div className="question-right">count-down</div>
+      <ShowModalAnswer
+        show={showModalResults}
+        setShow={setShowModalResults}
+        data={dataModeResults}
+      />
     </div>
   );
 };
