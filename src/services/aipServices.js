@@ -48,6 +48,21 @@ const postAddQuiz = (description, name, difficulty, image) => {
   data.append("quizImage", image);
   return axios.post("/api/v1/quiz", data);
 };
+const getQuizForSever = () => {
+  return axios.get("api/v1/quiz/all");
+};
+const putQuizForSever = (id, description, name, difficulty, image) => {
+  const data = new FormData();
+  data.append("id", id);
+  data.append("description", description);
+  data.append("name", name);
+  data.append("difficulty", difficulty);
+  data.append("quizImage", image);
+  return axios.put("api/v1/quiz", data);
+};
+const deleteQuizForServer = (QuizId) => {
+  return axios.delete(`api/v1/quiz/${QuizId}`);
+};
 export {
   potCreateUser,
   getListUsers,
@@ -60,5 +75,8 @@ export {
   getQuestionsById,
   postSummitAnswer,
   postAddQuiz,
+  getQuizForSever,
+  putQuizForSever,
+  deleteQuizForServer,
   //... other APIs
 };

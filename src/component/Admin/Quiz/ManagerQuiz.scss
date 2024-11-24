@@ -11,3 +11,18 @@
     }
   }
 }
+.preview-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 15px;
+  width: 97.5%;
+  height: 300px;
+  border: 1px dashed #ccc;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
