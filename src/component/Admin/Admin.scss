@@ -34,11 +34,13 @@
   // content
   .admin-content {
     width: 100%;
+    // height: calc(100vh -);
     .admin-header {
       border: 1px groove;
       height: 40px;
     }
     .admin-main {
+      height: calc(100vh - 40px);
       .table-user {
         height: 480px;
       }

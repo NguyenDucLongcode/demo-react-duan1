@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-perfect-scrollbar/dist/css/styles.css";
 import Users from "./component/User/User";
 import Admin from "./component/Admin/Admin";
 import HomePage from "./component/HomePage/HomePage";
@@ -17,6 +18,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import ListQuiz from "./component/User/ListQuiz";
 import Details from "./component/User/Details";
 import ManagerQuiz from "./component/Admin/Quiz/ManagerQuiz";
+import ManagerQuestion from "./component/Admin/Question/ManagerQuestion";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const NotFound = () => {
@@ -43,6 +45,7 @@ root.render(
             <Route index element={<DashBoard />} />
             <Route path="manager-users" element={<ManagerUser />} />
             <Route path="manager-quiz" element={<ManagerQuiz />} />
+            <Route path="manager-question" element={<ManagerQuestion />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

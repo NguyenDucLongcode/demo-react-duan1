@@ -121,7 +121,7 @@ const ManagerQuiz = (props) => {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      <div className="table-detail mt-5">
+      <div className="table-detail mt-3">
         <TableQuiz
           setShow={setIsShowModalEdit}
           setDataCurrentModalEdit={setDataCurrentModalEdit}

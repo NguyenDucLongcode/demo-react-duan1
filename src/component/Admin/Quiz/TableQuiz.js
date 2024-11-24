@@ -29,7 +29,9 @@ const TableQuiz = (props) => {
   };
   return (
     <>
-      <div>Table List Quiz...</div>
+      <div>
+        <b>Table List Quiz:</b>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>

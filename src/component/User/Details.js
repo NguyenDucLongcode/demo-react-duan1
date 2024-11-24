@@ -117,7 +117,7 @@ const Details = (props) => {
   };
 
   return (
-    <div className="question-container">
+    <div className="detail-question-container">
       <div className="question-left">
         <div className="title">
           Quiz {quizId}: {title}

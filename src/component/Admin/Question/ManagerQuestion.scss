@@ -1,0 +1,63 @@
+.question-container {
+  padding: 15px;
+  display: flex;
+  flex-flow: column;
+  .title {
+    font-size: 25px;
+    font-weight: 600;
+  }
+  .select-quiz {
+    width: 50%;
+  }
+  .question-content {
+    display: flex;
+    gap: 20px;
+    .floating-description {
+      width: 50%;
+      // z-index: -1;
+    }
+    .update-image {
+      padding-top: 10px;
+      .label-img {
+        // border: 1px solid red;
+        // border-radius: 8px;
+        // padding: 5px 10px;
+        font-size: 25px;
+        color: rgb(28, 28, 139);
+      }
+    }
+    .btn-group {
+      .btn-add {
+        font-size: 30px;
+        color: rgb(61, 48, 235);
+      }
+      .btn-remove {
+        margin-left: 10px;
+        font-size: 30px;
+        color: rgb(243, 185, 60);
+      }
+    }
+  }
+  .answer-content {
+    display: flex;
+    .checkBox {
+      font-size: 25px;
+      margin: 15px 10px 0 40px;
+    }
+    .floating-answer {
+      width: 44%;
+      margin-right: 20px;
+    }
+    .btn-group {
+      .btn-add {
+        font-size: 30px;
+        color: red;
+      }
+      .btn-remove {
+        margin-left: 10px;
+        font-size: 30px;
+        color: green;
+      }
+    }
+  }
+}
