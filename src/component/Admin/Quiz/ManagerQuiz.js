@@ -11,6 +11,8 @@ import TableQuiz from "./TableQuiz";
 import Accordion from "react-bootstrap/Accordion";
 import ModalEditQuiz from "./ModalEditQuiz";
 import ModalDeleteQuiz from "./ModalDeleteQuiz";
+import QuizUpdateQA from "./QuizUpdateQA";
+import AssignToUsers from "./AssignToUsers";
 const ManagerQuiz = (props) => {
   const options = [
     { value: "EASY", label: "EASY" },
@@ -118,18 +120,38 @@ const ManagerQuiz = (props) => {
                 </div>
               </fieldset>
             </div>
+            <div className="table-detail mt-3">
+              <TableQuiz
+                setShow={setIsShowModalEdit}
+                setDataCurrentModalEdit={setDataCurrentModalEdit}
+                dataApiModal={dataApiModal}
+                setIsShowModalDelete={setIsShowModalDelete}
+                setDataIdQuizDelete={setDataIdQuizDelete}
+              />
+            </div>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>
+            <div className="title">Update Q/A Quiz</div>
+          </Accordion.Header>
+          <Accordion.Body>
+            {/* component */}
+            <QuizUpdateQA />
+            {/* component */}
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="2">
+          <Accordion.Header>
+            <div className="title">Assign to Users</div>
+          </Accordion.Header>
+          <Accordion.Body>
+            {/* component */}
+            <AssignToUsers />
+            {/* component */}
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      <div className="table-detail mt-3">
-        <TableQuiz
-          setShow={setIsShowModalEdit}
-          setDataCurrentModalEdit={setDataCurrentModalEdit}
-          dataApiModal={dataApiModal}
-          setIsShowModalDelete={setIsShowModalDelete}
-          setDataIdQuizDelete={setDataIdQuizDelete}
-        />
-      </div>
       <ToastContainer
         position="top-right"
         autoClose={3000}

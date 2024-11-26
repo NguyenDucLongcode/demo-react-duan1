@@ -3,7 +3,7 @@ import { FaTachometerAlt, FaGithub, FaRegLaughWink } from "react-icons/fa";
 import sidebarBg from "../../acsets/bg-sidebar.jpg";
 import { Link, useNavigate } from "react-router-dom";
 const SideBar = (props) => {
-  const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const { collapsed, toggled, handleToggleSidebar } = props;
   const navigate = useNavigate();
   return (
     <>
@@ -73,9 +73,9 @@ const SideBar = (props) => {
           >
             <a
               href="https://github.com/azouaoui-med/react-pro-sidebar"
-              target="_blank"
+              // target="_blank"
               className="sidebar-btn"
-              rel="noopener noreferrer"
+              rel="northerner"
             >
               <FaGithub />
               <span

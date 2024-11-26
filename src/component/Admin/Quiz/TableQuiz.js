@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import { getQuizForSever } from "../../../services/aipServices";
+
 import { useState, useEffect } from "react";
 import _ from "lodash";
 const TableQuiz = (props) => {

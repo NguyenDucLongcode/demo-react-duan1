@@ -2,7 +2,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 const ShowModalAnswer = (props) => {
   const { show, setShow, data } = props;
-  console.log(">> check data", data);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (

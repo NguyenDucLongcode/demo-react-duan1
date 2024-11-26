@@ -1,6 +1,6 @@
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import "./ManagerQuestion.scss";
+import "./QuizUpdateQA.scss";
 import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
 import Select from "react-select";
 import { useState, useEffect } from "react";
@@ -15,7 +15,7 @@ import {
 } from "../../../services/aipServices";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const ManagerQuestion = (props) => {
+const QuizUpdateQA = (props) => {
   const [selectedOption, setSelectedOption] = useState({});
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [listQuestion, setListQuestion] = useState("");
@@ -226,7 +226,6 @@ const ManagerQuestion = (props) => {
   };
   return (
     <div className="question-container">
-      <div className="title">ManagerQuestion</div>
       <div className="add-new-question">
         <div className="select-quiz-content">
           <div className="mt-3">
@@ -422,4 +421,4 @@ const ManagerQuestion = (props) => {
     </div>
   );
 };
-export default ManagerQuestion;
+export default QuizUpdateQA;
