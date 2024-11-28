@@ -1,5 +1,8 @@
+import Lightbox from "react-awesome-lightbox";
+import { useState } from "react";
 const Question = (props) => {
   const { data } = props;
+  const [isPreviewImage, setIsPreviewImage] = useState(false);
   const dataQuestions = data.answers;
   const handleChange = (event, answerId, questionId) => {
     props.dataCheckBox(answerId, questionId);
@@ -8,11 +11,23 @@ const Question = (props) => {
     <>
       <div className="img-content">
         {data.image && (
-          <img src={`data:image/jpeg;base64,${data.image}`} alt="question" />
+          <img
+            onClick={() => setIsPreviewImage(true)}
+            style={{ cursor: "pointer" }}
+            src={`data:image/jpeg;base64,${data.image}`}
+            alt="question"
+          />
         )}
       </div>
+      {isPreviewImage && (
+        <Lightbox
+          image={`data:image/jpeg;base64,${data.image}`}
+          title={"Question Image"}
+          onClose={() => setIsPreviewImage(false)}
+        ></Lightbox>
+      )}
       <div className="question">
-        Question {data.quizId}: {data.description}?
+        Question {data.questionId}: {data.description}?
       </div>
       <div className="answer">
         {dataQuestions && dataQuestions.length > 0 ? (

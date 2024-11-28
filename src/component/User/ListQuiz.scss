@@ -1,4 +1,7 @@
 .list-quiz-container {
   display: flex;
   gap: 50px;
+  flex-wrap: wrap;
+
+  height: 650px;
 }

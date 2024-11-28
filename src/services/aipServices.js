@@ -77,6 +77,18 @@ const postAnswerForQuestion = (description, correct_answer, question_id) => {
     question_id,
   });
 };
+const postAssignToUser = (quizId, userId) => {
+  return axios.post("api/v1/quiz-assign-to-user", {
+    quizId,
+    userId,
+  });
+};
+const getQuestionForServer = (quizId) => {
+  return axios.get(`api/v1/quiz-with-qa/${quizId}`);
+};
+const postUpsertQA = (data) => {
+  return axios.post("api/v1/quiz-upsert-qa", { ...data });
+};
 export {
   potCreateUser,
   getListUsers,
@@ -94,5 +106,8 @@ export {
   deleteQuizForServer,
   postQuestionForServer,
   postAnswerForQuestion,
+  postAssignToUser,
+  getQuestionForServer,
+  postUpsertQA,
   //... other APIs
 };

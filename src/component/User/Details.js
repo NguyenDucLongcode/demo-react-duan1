@@ -6,6 +6,7 @@ import "./Details.scss";
 import Question from "./Question";
 import { useState } from "react";
 import ShowModalAnswer from "./ShowModalAnswer";
+import RightContent from "./RightContent";
 const Details = (props) => {
   const params = useParams();
   const quizId = params.id;
@@ -64,8 +65,15 @@ const Details = (props) => {
           return { quizId: key, answers, description, image };
         })
         .value();
+      data = data.map((item, index) => {
+        return { ...item, questionId: index + 1 };
+      });
       setDataQuestions(data);
     }
+  };
+
+  const handleCurrentQuestion = (questionId) => {
+    setIndex(questionId);
   };
 
   const NextIndex = () => {
@@ -150,7 +158,13 @@ const Details = (props) => {
           </button>
         </div>
       </div>
-      <div className="question-right">count-down</div>
+      <div className="question-right">
+        <RightContent
+          data={dataQuestions}
+          handleCurrentQuestion={handleCurrentQuestion}
+          handleFinish={handleFinish}
+        />
+      </div>
       <ShowModalAnswer
         show={showModalResults}
         setShow={setShowModalResults}

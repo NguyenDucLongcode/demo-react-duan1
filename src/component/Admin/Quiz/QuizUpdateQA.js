@@ -10,10 +10,10 @@ import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
 import {
   getQuizForSever,
-  postQuestionForServer,
-  postAnswerForQuestion,
+  getQuestionForServer,
+  postUpsertQA,
 } from "../../../services/aipServices";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const QuizUpdateQA = (props) => {
   const [selectedOption, setSelectedOption] = useState({});
@@ -43,6 +43,7 @@ const QuizUpdateQA = (props) => {
   useEffect(() => {
     fetchListQuiz();
   }, []);
+
   const fetchListQuiz = async () => {
     let resQuestion = await getQuizForSever();
     if (resQuestion && resQuestion.EC === 0) {
@@ -54,6 +55,52 @@ const QuizUpdateQA = (props) => {
       );
     }
   };
+
+  useEffect(() => {
+    if (selectedOption.value) {
+      fetchListQuestion();
+    }
+  }, [selectedOption]);
+
+  const fetchListQuestion = async () => {
+    let res = await getQuestionForServer(selectedOption.value);
+    if (res && res.EC === 0) {
+      // convert string file to abject file
+      let newQA = [];
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        let q = res.DT.qa[i];
+        if (q.imageFile) {
+          q.imageName = `Question-${q.id}.png`;
+          q.imageFile = await urltoFile(
+            `data:image/png;base64,${q.imageFile}`,
+            `Question-${q.id}.png`,
+            "image/png"
+          );
+        }
+        newQA.push(q);
+      }
+      setQuestions(newQA);
+    }
+  };
+
+  // return a promise that resolves with a File instance
+  function urltoFile(url, filename, mimeType) {
+    if (url.startsWith("data:")) {
+      var arr = url.split(","),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[arr.length - 1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      var file = new File([u8arr], filename, { type: mime || mimeType });
+      return Promise.resolve(file);
+    }
+    return fetch(url)
+      .then((res) => res.arrayBuffer())
+      .then((buf) => new File([buf], filename, { type: mimeType }));
+  }
 
   const handleAddRemoveQuestion = (type, questionId) => {
     let questionsClone = _.cloneDeep(questions);
@@ -192,38 +239,50 @@ const QuizUpdateQA = (props) => {
       return;
     }
 
-    // call api method
+    // convert file based 64
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+      });
 
-    for (const question of questions) {
-      const resQuestion = await postQuestionForServer(
-        +selectedOption.value,
-        question.description,
-        question.imageFile
-      );
-      for (const answer of question.answers) {
-        await postAnswerForQuestion(
-          answer.description,
-          answer.isCorrect,
-          resQuestion.DT.id
+    // call api method
+    let questionsClone = _.cloneDeep(questions);
+    for (let i = 0; i < questionsClone.length; i++) {
+      if (questionsClone[i].imageFile) {
+        questionsClone[i].imageFile = await toBase64(
+          questionsClone[i].imageFile
         );
       }
     }
-    toast.success("Save successfully!");
-    setQuestions(init);
+    console.log(">> clone", questionsClone);
+    let res = await postUpsertQA({
+      quizId: selectedOption.value,
+      questions: questionsClone,
+    });
+    console.log(">> res", res);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+    } else {
+      toast.error(res.EM);
+    }
   };
-  console.log("check question", init.description);
 
   const handleClickShowImage = (questionId) => {
     let questionsClone = _.cloneDeep(questions);
+
     let index = questionsClone.findIndex((item) => item.id === questionId);
     if (index > -1) {
       setDataPreview({
-        url: URL.createObjectURL(questionsClone[index].imageFile[0]),
+        url: URL.createObjectURL(questionsClone[index].imageFile),
         title: questionsClone[index].imageName,
       });
       setIsPreviewImage(true);
     }
   };
+
   return (
     <div className="question-container">
       <div className="add-new-question">
@@ -254,17 +313,18 @@ const QuizUpdateQA = (props) => {
                       <FloatingLabel
                         label={`Question ${index + 1} 's description`}
                         className="mb-3"
-                        onChange={(event) => {
-                          handleOnChangeQuestion(
-                            "DESCRIPTION",
-                            question.id,
-                            event.target.value
-                          );
-                        }}
                       >
                         <Form.Control
                           type="text"
                           placeholder="name@example.com"
+                          value={question.description}
+                          onChange={(event) => {
+                            handleOnChangeQuestion(
+                              "DESCRIPTION",
+                              question.id,
+                              event.target.value
+                            );
+                          }}
                         />
                       </FloatingLabel>
                     </div>
@@ -326,6 +386,7 @@ const QuizUpdateQA = (props) => {
                           <input
                             className="form-check-input checkBox"
                             type="checkBox"
+                            checked={answer.isCorrect}
                             onChange={(event) =>
                               handleOnChangeAnswer(
                                 "CHECKBOX",
@@ -339,18 +400,19 @@ const QuizUpdateQA = (props) => {
                             <FloatingLabel
                               label={`Answer ${index + 1}`}
                               className="mb-3"
-                              onChange={(event) =>
-                                handleOnChangeAnswer(
-                                  "INPUT",
-                                  question.id,
-                                  answer.id,
-                                  event.target.value
-                                )
-                              }
                             >
                               <Form.Control
                                 type="text"
                                 placeholder="name@example.com"
+                                value={answer.description}
+                                onChange={(event) =>
+                                  handleOnChangeAnswer(
+                                    "INPUT",
+                                    question.id,
+                                    answer.id,
+                                    event.target.value
+                                  )
+                                }
                               />
                             </FloatingLabel>
                           </div>
@@ -405,19 +467,6 @@ const QuizUpdateQA = (props) => {
           )}
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
     </div>
   );
 };

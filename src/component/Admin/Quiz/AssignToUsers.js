@@ -1,6 +1,11 @@
 import Select from "react-select";
 import { useState, useEffect } from "react";
-import { getQuizForSever, getListUsers } from "../../../services/aipServices";
+import {
+  getQuizForSever,
+  getListUsers,
+  postAssignToUser,
+} from "../../../services/aipServices";
+import { toast } from "react-toastify";
 const AssignToUsers = (props) => {
   const [selectedOptionQuiz, setSelectedOptionQuiz] = useState({});
   const [listQuestion, setListQuestion] = useState("");
@@ -17,7 +22,7 @@ const AssignToUsers = (props) => {
       setListQuestion(
         resQuestion.DT.map((question) => ({
           value: question.id,
-          label: `${question.id} - ${question.description}`,
+          label: `${question.id} - ${question.name}`,
         }))
       );
     }
@@ -25,7 +30,6 @@ const AssignToUsers = (props) => {
 
   const fetchListUser = async () => {
     let resUsers = await getListUsers();
-    console.log(resUsers);
     if (resUsers && resUsers.EC === 0) {
       setListUser(
         resUsers.DT.map((user) => ({
@@ -36,6 +40,17 @@ const AssignToUsers = (props) => {
     }
   };
 
+  const handleAssign = async () => {
+    let res = await postAssignToUser(
+      selectedOptionQuiz.value,
+      selectedOptionUser.value
+    );
+    if (res && res.EC === 0) {
+      toast.success("Assign successfully");
+    } else {
+      toast.error("Assign failed");
+    }
+  };
   return (
     <div className="assign-container row">
       {" "}
@@ -64,7 +79,14 @@ const AssignToUsers = (props) => {
         </div>
       </div>
       <div className="mt-3">
-        <button className="btn btn-warning">Assign</button>
+        <button
+          className="btn btn-warning"
+          onClick={() => {
+            handleAssign();
+          }}
+        >
+          Assign
+        </button>
       </div>
     </div>
   );

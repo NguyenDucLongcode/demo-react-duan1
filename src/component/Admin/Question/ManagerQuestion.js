@@ -195,10 +195,11 @@ const ManagerQuestion = (props) => {
     // call api method
 
     for (const question of questions) {
+      const imageFile = question.imageFile?.[0];
       const resQuestion = await postQuestionForServer(
         +selectedOption.value,
         question.description,
-        question.imageFile
+        imageFile
       );
       for (const answer of question.answers) {
         await postAnswerForQuestion(
@@ -211,7 +212,6 @@ const ManagerQuestion = (props) => {
     toast.success("Save successfully!");
     setQuestions(init);
   };
-  console.log("check question", init.description);
 
   const handleClickShowImage = (questionId) => {
     let questionsClone = _.cloneDeep(questions);

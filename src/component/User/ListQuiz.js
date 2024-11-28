@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const ListQuiz = (props) => {
   const navigate = useNavigate();
   const [arrQuiz, setArrQuiz] = useState([]);
+
   useEffect(() => {
     getQuizData();
   }, []);
@@ -23,7 +24,7 @@ const ListQuiz = (props) => {
             <div
               key={`${index}-quiz`}
               className="card"
-              style={{ width: "18rem" }}
+              style={{ width: "16rem" }}
             >
               <img
                 src={`data:image/jpeg;base64,${item.image}`}
