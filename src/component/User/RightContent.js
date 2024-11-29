@@ -1,13 +1,23 @@
 import CountDown from "./CountDown";
 import "./RightContent.scss";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { useState } from "react";
 const RightContent = (props) => {
   const { data } = props;
-  const [onTimeUp, setOnTimeUp] = useState();
 
   const handleTimeUp = () => {
     props.handleFinish();
+  };
+
+  const checkClass = (data) => {
+    if (data.answers && data.answers.length > 0) {
+      console.log(">> check data ", data.answers);
+      let isAnswers = data.answers.find((a) => a.isSelected === true);
+      console.log(">> isAnswer", isAnswers);
+      if (isAnswers) {
+        return "question selected";
+      }
+    }
+    return "question";
   };
   return (
     <div className="countDown-container">
@@ -16,21 +26,23 @@ const RightContent = (props) => {
       </div>
       <PerfectScrollbar>
         <div className="showQuestion">
-          {data &&
-            data.length > 0 &&
-            data.map((item, index) => {
-              return (
-                <div
-                  key={`${index}-question`}
-                  className="question"
-                  onClick={() => {
-                    props.handleCurrentQuestion(index);
-                  }}
-                >
-                  {item.questionId}
-                </div>
-              );
-            })}
+          <div className="content">
+            {data &&
+              data.length > 0 &&
+              data.map((item, index) => {
+                return (
+                  <div
+                    key={`${index}-question`}
+                    className={checkClass(item)}
+                    onClick={() => {
+                      props.handleCurrentQuestion(index);
+                    }}
+                  >
+                    {item.questionId}
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </PerfectScrollbar>
     </div>

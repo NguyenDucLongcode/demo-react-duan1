@@ -110,7 +110,6 @@ const Details = (props) => {
       });
       payload.answers = answers;
       let res = await postSummitAnswer(payload);
-      console.log(res);
       if (res && res.EC === 0) {
         setDataModeResults({
           countCorrect: res.DT.countCorrect,

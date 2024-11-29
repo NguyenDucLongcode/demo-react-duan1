@@ -16,6 +16,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleSubmit = async () => {
     setIsLoading(true);
     let data = await postLogin(email, password);
@@ -29,12 +30,19 @@ const Login = () => {
     }
     setIsLoading(false);
   };
+
   let inputPassword = document.querySelector("#password");
   const handleShowHidePassword = () => {
     if (inputPassword) {
       inputPassword.type =
         inputPassword.type === "password" ? "text" : "password";
       setShowPassword(!showPassword);
+    }
+  };
+
+  const handleOnKeyDownSubmit = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit();
     }
   };
   return (
@@ -60,6 +68,9 @@ const Login = () => {
               setPassword(event.target.value);
             }}
             value={password}
+            onKeyDown={(event) => {
+              handleOnKeyDownSubmit(event);
+            }}
           />
           <i
             className="icon-show"

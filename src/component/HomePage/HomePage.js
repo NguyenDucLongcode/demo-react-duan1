@@ -1,26 +1,22 @@
 import video_HomePage from "../../acsets/video-Homepage.mp4";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 const HomePage = (props) => {
+  const { t } = useTranslation();
+
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const navigate = useNavigate();
   return (
     <div className="homePage-container">
       <div className="homPage-content">
-        <div>
-          <p>Get to know your customers with forms worth filling out</p>
-        </div>
-        <div>
-          <p>
-            Collect all the data you need to
-            <strong>understand customers</strong>" with forms designed to be
-            refreshingly different."
-          </p>
-        </div>
+        <div>{t("HomePage.title1")}</div>
+        <div>{t("HomePage.title2")}</div>
         <div>
           {!isAuthenticated ? (
             <button onClick={() => navigate("/login")}>
-              Get started-it's free
+              {t("HomePage.title3")}
             </button>
           ) : (
             <button onClick={() => navigate("/users")}>Doing Quiz</button>

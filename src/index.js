@@ -20,6 +20,9 @@ import ListQuiz from "./component/User/ListQuiz";
 import Details from "./component/User/Details";
 import ManagerQuiz from "./component/Admin/Quiz/ManagerQuiz";
 import ManagerQuestion from "./component/Admin/Question/ManagerQuestion";
+import PrivateRouter from "./component/router/PrivateRoute";
+import "./utils/i18n";
+import { Suspense } from "react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const NotFound = () => {
@@ -30,32 +33,51 @@ const NotFound = () => {
   );
 };
 root.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      {/* <React.StrictMode> */}
-      <BrowserRouter>
-        <Routes>
-          {/* add */}
-          <Route path="/" element={<App />}>
-            <Route index element={<HomePage />} />
-            <Route path="users" element={<ListQuiz />} />
-          </Route>
-          <Route path="/quiz/:id" element={<Details />} />
-          {/* admin */}
-          <Route path="/admins" element={<Admin />}>
-            <Route index element={<DashBoard />} />
-            <Route path="manager-users" element={<ManagerUser />} />
-            <Route path="manager-quiz" element={<ManagerQuiz />} />
-            <Route path="manager-question" element={<ManagerQuestion />} />
-          </Route>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-      {/* </React.StrictMode> */}
-    </PersistGate>
-  </Provider>
+  <Suspense fallback="...is loading">
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        {/* <React.StrictMode> */}
+        <BrowserRouter>
+          <Routes>
+            {/* add */}
+            <Route path="/" element={<App />}>
+              <Route index element={<HomePage />} />
+
+              <Route
+                path="users"
+                element={
+                  <PrivateRouter>
+                    <ListQuiz />
+                  </PrivateRouter>
+                }
+              />
+            </Route>
+            <Route path="/quiz/:id" element={<Details />} />
+            {/* admin */}
+            <Route
+              path="/admins"
+              element={
+                <PrivateRouter>
+                  <Admin />
+                </PrivateRouter>
+              }
+            >
+              <Route index element={<DashBoard />} />
+              <Route path="manager-users" element={<ManagerUser />} />
+              <Route path="manager-quiz" element={<ManagerQuiz />} />
+              <Route path="manager-question" element={<ManagerQuestion />} />
+            </Route>
+
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="test" element={<PrivateRouter />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+        {/* </React.StrictMode> */}
+      </PersistGate>
+    </Provider>
+  </Suspense>
 );
 
 // If you want to start measuring performance in your app, pass a function

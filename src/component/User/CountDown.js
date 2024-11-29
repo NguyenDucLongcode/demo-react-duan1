@@ -4,7 +4,7 @@ const CountDown = (props) => {
 
   useEffect(() => {
     if (count === 0) {
-      props.handleTimeUp();
+      // props.handleTimeUp();
       return;
     }
 
