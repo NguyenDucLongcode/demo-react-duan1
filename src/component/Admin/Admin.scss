@@ -37,7 +37,21 @@
     // height: calc(100vh -);
     .admin-header {
       border: 1px groove;
-      height: 40px;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .header-right {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 30px;
+        margin-right: 30px;
+      }
+      .header-left {
+        font-size: 25px;
+        color: #3e3838;
+        cursor: pointer;
+      }
     }
     .admin-main {
       height: calc(100vh - 40px);

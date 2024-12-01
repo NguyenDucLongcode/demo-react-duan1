@@ -6,7 +6,6 @@ const Languages = (props) => {
 
   const handleChangeLanguages = (language) => {
     i18n.changeLanguage(language);
-    console.log(i18n.changeLanguage());
   };
   return (
     <>

@@ -5,11 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../services/aipServices";
 import { doLogOut } from "../../redux/action/userAction";
 import Languages from "./Languages";
+import Profile from "./Profile";
+import { useState } from "react";
 const Header = () => {
+  //stare react
+  const [isShowModalProfile, setIsShowModalProfile] = useState(false);
+
+  // state redux
   const account = useSelector((state) => state.user.account);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // navigate to link
+  const navigate = useNavigate();
+
   const handleLogin = () => {
     navigate("/login");
   };
@@ -75,9 +84,14 @@ const Header = () => {
         ) : (
           <>
             <NavDropdown title="Setting" id="nav-dropdown">
-              <NavDropdown.Item href="#profile">Profile</NavDropdown.Item>
               <NavDropdown.Item
-                href="#logout"
+                onClick={() => {
+                  setIsShowModalProfile(true);
+                }}
+              >
+                Profile
+              </NavDropdown.Item>
+              <NavDropdown.Item
                 onClick={() => {
                   handleLogOut();
                 }}
@@ -89,6 +103,7 @@ const Header = () => {
         )}
         <Languages />
       </Nav>
+      <Profile show={isShowModalProfile} setShow={setIsShowModalProfile} />
     </Nav>
   );
 };

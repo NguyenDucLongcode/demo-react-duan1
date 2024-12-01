@@ -96,6 +96,17 @@ const logOut = (email, refresh_token) => {
     refresh_token,
   });
 };
+
+const getDashboardOverView = () => {
+  return axios.get("api/v1/overview");
+};
+
+const postUpdateProfile = (username, userImage) => {
+  const data = new FormData();
+  data.append("username", username);
+  data.append("userImage", userImage);
+  return axios.post("api/v1/profile", data);
+};
 export {
   potCreateUser,
   getListUsers,
@@ -117,5 +128,7 @@ export {
   getQuestionForServer,
   postUpsertQA,
   logOut,
+  getDashboardOverView,
+  postUpdateProfile,
   //... other APIs
 };

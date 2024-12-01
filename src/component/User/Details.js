@@ -7,6 +7,9 @@ import Question from "./Question";
 import { useState } from "react";
 import ShowModalAnswer from "./ShowModalAnswer";
 import RightContent from "./RightContent";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
+import { Link, useNavigate } from "react-router-dom";
+
 const Details = (props) => {
   const params = useParams();
   const quizId = params.id;
@@ -16,6 +19,9 @@ const Details = (props) => {
   const [index, setIndex] = useState(0);
   const [showModalResults, setShowModalResults] = useState(false);
   const [dataModeResults, setDataModeResults] = useState({});
+
+  const navigation = useNavigate();
+
   useEffect(() => {
     fetchQuestions();
   }, [quizId]);
@@ -125,44 +131,60 @@ const Details = (props) => {
 
   return (
     <div className="detail-question-container">
-      <div className="question-left">
-        <div className="title">
-          Quiz {quizId}: {title}
+      <div className="header-user">
+        {" "}
+        <Breadcrumb>
+          <Breadcrumb.Item onClick={() => navigation("/")}>
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item onClick={() => navigation("/users")}>
+            Users
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active onClick={() => navigation("/admins")}>
+            Admin
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <div className="detail-content">
+        <div className="question-left">
+          <div className="title">
+            Quiz {quizId}: {title}
+          </div>
+          <hr />
+          <div className="question-content">
+            <Question
+              data={
+                dataQuestions && dataQuestions.length > 0
+                  ? dataQuestions[index]
+                  : []
+              }
+              dataCheckBox={dataCheckBox}
+            />
+          </div>
+          <div className="footer">
+            <button className="btn btn-secondary" onClick={() => prevIndex()}>
+              Prev
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                NextIndex();
+              }}
+            >
+              Next
+            </button>
+            <button className="btn btn-warning" onClick={() => handleFinish()}>
+              Finish
+            </button>
+          </div>
         </div>
-        <hr />
-        <div className="question-content">
-          <Question
-            data={
-              dataQuestions && dataQuestions.length > 0
-                ? dataQuestions[index]
-                : []
-            }
-            dataCheckBox={dataCheckBox}
+        <div className="question-right">
+          <RightContent
+            data={dataQuestions}
+            handleCurrentQuestion={handleCurrentQuestion}
+            handleFinish={handleFinish}
           />
         </div>
-        <div className="footer">
-          <button className="btn btn-secondary" onClick={() => prevIndex()}>
-            Prev
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              NextIndex();
-            }}
-          >
-            Next
-          </button>
-          <button className="btn btn-warning" onClick={() => handleFinish()}>
-            Finish
-          </button>
-        </div>
-      </div>
-      <div className="question-right">
-        <RightContent
-          data={dataQuestions}
-          handleCurrentQuestion={handleCurrentQuestion}
-          handleFinish={handleFinish}
-        />
       </div>
       <ShowModalAnswer
         show={showModalResults}
